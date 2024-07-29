@@ -27,6 +27,6 @@ public class GlobalExceptionHandler {
         log.error("GlobalExceptionHandler catch MethodArgumentNotValidException: {}", e.getMessage());
         return ResponseEntity
                 .status(e.getStatusCode())
-                .body(ErrorType.INVALID_HTTP_REQUEST_ERROR);
+                .body(ErrorType.REQUEST_VALIDATION_ERROR);
     }
 }
