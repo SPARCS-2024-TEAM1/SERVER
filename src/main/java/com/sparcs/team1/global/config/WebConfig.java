@@ -2,6 +2,7 @@ package com.sparcs.team1.global.config;
 
 import java.util.List;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -27,7 +28,10 @@ public class WebConfig implements WebMvcConfigurer {
         // 기존 컨버터들을 모두 제거 (외부 라이브러리 코틀린 컨버터와의 충돌을 피하기 위함)
         converters.clear();
 
-        // Jackson 라이브러리를 사용하는 컨버터만 추가
+        // Swagger 오류 해결을 위한 ByteArrayHttpMessageConverter 추가 (add 순서 중요)
+        converters.add(new ByteArrayHttpMessageConverter());
+
+        // Jackson 라이브러리를 사용하는 컨버터를 추가
         converters.add(new MappingJackson2HttpMessageConverter());
     }
 }
