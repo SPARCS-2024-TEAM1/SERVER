@@ -51,12 +51,7 @@ public class MemberService {
     public void sendCode(final SendCodeRequest sendCodeRequest) {
         Message message = new Message();
 
-        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 함.
-        String toNumber = sendCodeRequest.phoneNumber().replaceAll("-", "");
-
-        if (!toNumber.matches(PHONE_NUMBER_PATTERN)) {
-            throw new CustomException(ErrorType.INVALID_PHONE_NUMBER_ERROR);
-        }
+        String toNumber = validPhoneNumber(sendCodeRequest.phoneNumber());
 
         message.setFrom(fromNumber);
         message.setTo(toNumber);
@@ -71,6 +66,18 @@ public class MemberService {
         );
     }
 
+    // 전화번호 유효성 검증
+    private String validPhoneNumber(String phoneNumber) {
+        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 함.
+        phoneNumber = phoneNumber.replaceAll("-", "");
+
+        if (!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
+            throw new CustomException(ErrorType.INVALID_PHONE_NUMBER_ERROR);
+        }
+
+        return phoneNumber;
+    }
+
     // 인증번호를 위한 랜덤 숫자 생성
     private String generateRandomNumber(final int digitCount) {
         Random random = new Random();
@@ -83,7 +90,7 @@ public class MemberService {
     // 인증번호 일치 여부 확인
     @Transactional
     public void verifyCode(final VerifyCodeRequest verifyCodeRequest) {
-        String phoneNumber = verifyCodeRequest.phoneNumber().replaceAll("-", "");
+        String phoneNumber = validPhoneNumber(verifyCodeRequest.phoneNumber());
 
         if (verifyCodeRequest.verificationCode().equals(codeService.findCodeByPhoneNumber(phoneNumber))) {
             codeService.deleteVerificationCode(phoneNumber);
@@ -115,6 +122,11 @@ public class MemberService {
     @Transactional
     public OnboardingResponse signUp(final SignUpRequest signUpRequest) {
         validNickname(signUpRequest.nickname());
+        String phoneNumber = validPhoneNumber(signUpRequest.phoneNumber());
+
+        if (!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
+            throw new CustomException(ErrorType.INVALID_PHONE_NUMBER_ERROR);
+        }
 
         Member member = Member.builder()
                 .phoneNumber(signUpRequest.phoneNumber())
