@@ -6,6 +6,7 @@ import com.sparcs.team1.domain.member.dto.SignUpRequest;
 import com.sparcs.team1.domain.member.dto.VerifyCodeRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -23,24 +24,15 @@ public interface MemberApi {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Success",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
-                            )
+                            description = "Success"
                     ),
                     @ApiResponse(
                             responseCode = "40001",
-                            description = "유효하지 않은 요청입니다.(Valid 실패)",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
-                            )
+                            description = "유효하지 않은 요청입니다.(Valid 실패)"
                     ),
                     @ApiResponse(
                             responseCode = "40002",
-                            description = "잘못된 휴대전화 번호 양식입니다.",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
-                            )
+                            description = "잘못된 휴대전화 번호 양식입니다."
                     )
             }
     )
@@ -57,36 +49,31 @@ public interface MemberApi {
                             responseCode = "200",
                             description = "Success",
                             content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(
+                                            implementation = OnboardingResponse.class
+                                    )
                             )
                     ),
                     @ApiResponse(
                             responseCode = "40001",
                             description = "유효하지 않은 요청입니다.(Valid 실패)",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
-                            )
+                            content = @Content
                     ),
                     @ApiResponse(
                             responseCode = "40003",
                             description = "인증번호가 올바르지 않습니다.",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
-                            )
+                            content = @Content
                     ),
                     @ApiResponse(
                             responseCode = "40401",
                             description = "인증 요청 이력이 존재하지 않습니다.",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
-                            )
+                            content = @Content
                     ),
                     @ApiResponse(
                             responseCode = "40402",
                             description = "존재하지 않는 회원입니다.",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
-                            )
+                            content = @Content
                     )
             }
     )
@@ -103,22 +90,21 @@ public interface MemberApi {
                             responseCode = "200",
                             description = "Success",
                             content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(
+                                            implementation = OnboardingResponse.class
+                                    )
                             )
                     ),
                     @ApiResponse(
                             responseCode = "40001",
                             description = "유효하지 않은 요청입니다.(Valid 실패)",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
-                            )
+                            content = @Content
                     ),
                     @ApiResponse(
                             responseCode = "40004",
                             description = "닉네임이 조건을 만족하지 않습니다.",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
-                            )
+                            content = @Content
                     )
             }
     )
