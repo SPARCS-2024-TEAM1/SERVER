@@ -16,6 +16,7 @@ public enum ErrorType {
     INVALID_PHONE_NUMBER_ERROR(HttpStatus.BAD_REQUEST, "40002", "잘못된 휴대전화 번호 양식입니다."),
     INVALID_VERIFICATION_CODE_ERROR(HttpStatus.BAD_REQUEST, "40003", "인증번호가 올바르지 않습니다."),
     INVALID_NICKNAME_ERROR(HttpStatus.BAD_REQUEST, "40004", "닉네임이 조건을 만족하지 않습니다."),
+    FAILED_FILE_UPLOAD_ERROR(HttpStatus.BAD_REQUEST, "40005", "파일 업로드에 실패하였습니다."),
 
     /**
      * 404 NOT FOUND
