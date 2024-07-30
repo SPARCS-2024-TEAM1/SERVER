@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class MoodDiaryController {
+public class MoodDiaryController implements MoodDiaryApi {
 
     private final MoodDiaryService moodDiaryService;
 
+    @Override
     @PostMapping("/diary")
     public ResponseEntity<CreateDiaryResponse> createMoodDiary(
             @ModelAttribute CreateDiaryRequest createDiaryRequest

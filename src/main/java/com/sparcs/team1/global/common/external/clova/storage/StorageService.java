@@ -10,7 +10,6 @@ import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -21,8 +20,7 @@ public class StorageService {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
-
-    @Transactional
+    
     public String uploadObjectStorage(String fileName, MultipartFile multipartFile) {
         // 파일 메타데이터 설정
         ObjectMetadata metadata = new ObjectMetadata();
