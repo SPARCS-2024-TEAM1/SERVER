@@ -10,8 +10,15 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findMemberByPhoneNumber(String phoneNumber);
 
+    Optional<Member> findMemberById(Long id);
+
     default Member findMemberByPhoneNumberOrThrow(String phoneNumber) {
         return findMemberByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
+    }
+
+    default Member findMemberByIdOrThrow(Long id) {
+        return findMemberById(id)
                 .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MEMBER_ERROR));
     }
 }
