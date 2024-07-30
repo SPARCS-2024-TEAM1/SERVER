@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class MemberController {
+public class MemberController implements MemberApi {
 
     private final MemberService memberService;
 
+    @Override
     @PostMapping("/phone/code")
     public ResponseEntity<Void> sendCode(
             @Valid @RequestBody SendCodeRequest sendCodeRequest
@@ -29,6 +30,7 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
+    @Override
     @PostMapping("/phone/verification")
     public ResponseEntity<OnboardingResponse> verifyCode(
             @Valid @RequestBody VerifyCodeRequest verifyCodeRequest
@@ -38,6 +40,7 @@ public class MemberController {
         return ResponseEntity.ok(memberService.signIn(verifyCodeRequest.phoneNumber()));
     }
 
+    @Override
     @PostMapping("/sign-up")
     public ResponseEntity<OnboardingResponse> signUp(
             @Valid @RequestBody SignUpRequest signUpRequest

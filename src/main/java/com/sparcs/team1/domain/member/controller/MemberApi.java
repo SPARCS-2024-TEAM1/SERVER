@@ -14,11 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Tag(name = "회원가입/로그인 API")
+@Tag(name = "문자 인증을 통한 회원가입/로그인 API")
 public interface MemberApi {
 
     @Operation(
             summary = "문자 발송 API",
+            description = "입력한 번호로 인증번호 문자를 발송합니다.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -49,7 +50,8 @@ public interface MemberApi {
     );
 
     @Operation(
-            summary = "문자 발송 API",
+            summary = "문자 인증 및 로그인 API",
+            description = "문자 인증 성공 후 기존 회원일 시 멤버 Id와 닉네임을 반환합니다.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -94,7 +96,8 @@ public interface MemberApi {
     );
 
     @Operation(
-            summary = "문자 발송 API",
+            summary = "회원가입 API",
+            description = "입력 받은 닉네임과 휴대전화 번호로 회원가입을 진행합니다.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
