@@ -105,6 +105,11 @@ public interface MemberApi {
                             responseCode = "40004",
                             description = "닉네임이 조건을 만족하지 않습니다.",
                             content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "40901",
+                            description = "이미 사용 중인 휴대전화 번호입니다.",
+                            content = @Content
                     )
             }
     )

@@ -121,16 +121,13 @@ public class MemberService {
 
     @Transactional
     public OnboardingResponse signUp(final SignUpRequest signUpRequest) {
-        validNickname(signUpRequest.nickname());
+        String nickname = validNickname(signUpRequest.nickname());
         String phoneNumber = validPhoneNumber(signUpRequest.phoneNumber());
-
-        if (!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
-            throw new CustomException(ErrorType.INVALID_PHONE_NUMBER_ERROR);
-        }
+        validPhoneNumberDuplication(phoneNumber);
 
         Member member = Member.builder()
-                .phoneNumber(signUpRequest.phoneNumber())
-                .nickname(signUpRequest.nickname())
+                .phoneNumber(phoneNumber)
+                .nickname(nickname)
                 .build();
         memberRepository.save(member);
 
@@ -141,10 +138,19 @@ public class MemberService {
     }
 
     // 닉네임 유효성 검증
-    private void validNickname(final String nickname) {
+    private String validNickname(final String nickname) {
         // 형식 체크
         if (!nickname.matches(NICKNAME_PATTERN)) {
             throw new CustomException(ErrorType.INVALID_NICKNAME_ERROR);
+        }
+
+        return nickname;
+    }
+
+    // 전화번호 중복 체크
+    private void validPhoneNumberDuplication(String phoneNumber) {
+        if (memberRepository.existsByPhoneNumber(phoneNumber)) {
+            throw new CustomException(ErrorType.PHONE_NUMBER_DUP_ERROR);
         }
     }
 }
