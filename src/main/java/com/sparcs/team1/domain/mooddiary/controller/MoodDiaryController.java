@@ -5,6 +5,7 @@ import com.sparcs.team1.domain.mooddiary.dto.CreateAnswerResponse;
 import com.sparcs.team1.domain.mooddiary.dto.CreateAudioRequest;
 import com.sparcs.team1.domain.mooddiary.dto.CreateDiaryRequest;
 import com.sparcs.team1.domain.mooddiary.dto.CreateDiaryResponse;
+import com.sparcs.team1.domain.mooddiary.dto.MoodDiaryCardListResponse;
 import com.sparcs.team1.domain.mooddiary.service.MoodDiaryService;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,7 +66,7 @@ public class MoodDiaryController implements MoodDiaryApi {
             try (FileInputStream inputStream = new FileInputStream(audioFile)) {
                 byte[] buffer = new byte[4096];
                 int bytesRead;
-                
+
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                 }
@@ -82,5 +85,12 @@ public class MoodDiaryController implements MoodDiaryApi {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(responseBody);
+    }
+
+    @GetMapping("/diary/{memberId}")
+    public ResponseEntity<MoodDiaryCardListResponse> getDiaryDateList(
+            @PathVariable final Long memberId
+    ) {
+        return ResponseEntity.ok(moodDiaryService.getMoodDiaryCards(memberId));
     }
 }
