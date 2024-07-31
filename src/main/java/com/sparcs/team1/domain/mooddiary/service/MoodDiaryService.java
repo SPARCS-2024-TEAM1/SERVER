@@ -22,6 +22,7 @@ import com.sparcs.team1.global.common.external.clova.storage.StorageService;
 import com.sparcs.team1.global.common.external.clova.summary.ClovaSummarizationService;
 import com.sparcs.team1.global.common.external.clova.tts.NaverTtsService;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -125,8 +126,9 @@ public class MoodDiaryService {
 
     public MoodDiaryCardListResponse getMoodDiaryCards(Long memberId) {
         List<MoodDiaryCard> moodDiaryCards = moodDiaryRepository
-                .findAllByMemberIdAndAnswerIsNotNullOrderByCreatedAtAsc(memberId)
+                .findAllMoodDiaryByMemberIdAndAnswerIsNotNullOrderByCreatedAtAsc(memberId)
                 .stream()
+                .filter(moodDiary -> moodDiary.getCreatedAt().toLocalDate().isBefore(LocalDate.now())) // 오늘 날짜 제외
                 .map(moodDiary -> new MoodDiaryCard(
                         moodDiary.getId(),
                         moodDiary.getCreatedAt().format(DateTimeFormatter.ofPattern("yy.MM.dd"))
@@ -138,6 +140,17 @@ public class MoodDiaryService {
 
     public MoodDiaryResponse getMoodDiary(Long moodDiaryId) {
         MoodDiary moodDiary = moodDiaryRepository.findMoodDiaryByIdOrThrow(moodDiaryId);
+
+        return MoodDiaryResponse.of(
+                moodDiary.getId(),
+                moodDiary.getAssistant(),
+                moodDiary.getAnswer(),
+                moodDiary.getSummary()
+        );
+    }
+
+    public MoodDiaryResponse getTodayMoodDiary(Long memberId) {
+        MoodDiary moodDiary = moodDiaryRepository.findTodayMoodDiaryByMemberIdOrThrow(memberId);
 
         return MoodDiaryResponse.of(
                 moodDiary.getId(),
