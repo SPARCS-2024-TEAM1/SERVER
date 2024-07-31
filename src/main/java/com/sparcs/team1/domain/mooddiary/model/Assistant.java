@@ -8,9 +8,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum Assistant {
 
-    VICKY("VICKY"),
-    REALLY("REALLY"),
-    BANGBANG("BANGBANG"),
+    동글이("동글이"),
+    뾰족이("뾰족이"),
     ;
 
     private final String assistant;
