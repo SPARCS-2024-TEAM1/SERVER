@@ -66,6 +66,12 @@ dependencies {
 
     // S3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    // Open Feign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.2'
+
+    // JSON
+    implementation 'org.json:json:20231013'
 }
 
 tasks.named('test') {
