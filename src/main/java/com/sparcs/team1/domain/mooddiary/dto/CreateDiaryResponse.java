@@ -2,15 +2,15 @@ package com.sparcs.team1.domain.mooddiary.dto;
 
 public record CreateDiaryResponse(
         Long moodDiaryId,
-        String diary
+        String summary
 ) {
     public static CreateDiaryResponse of(
             final Long moodDiaryId,
-            final String diary
+            final String summary
     ) {
         return new CreateDiaryResponse(
                 moodDiaryId,
-                diary
+                summary
         );
     }
 }

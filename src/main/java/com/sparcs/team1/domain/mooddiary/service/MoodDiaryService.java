@@ -9,6 +9,7 @@ import com.sparcs.team1.domain.mooddiary.repository.MoodDiaryRepository;
 import com.sparcs.team1.global.common.external.clova.speech.ClovaSpeechClient;
 import com.sparcs.team1.global.common.external.clova.speech.ClovaSpeechClient.NestRequestEntity;
 import com.sparcs.team1.global.common.external.clova.storage.StorageService;
+import com.sparcs.team1.global.common.external.clova.summary.ClovaSummarizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +22,9 @@ public class MoodDiaryService {
     private final MoodDiaryRepository moodDiaryRepository;
 
     private final StorageService storageService;
+    private final ClovaSummarizationService clovaSummarizationService;
 
-    private final ClovaSpeechClient clovaSpeechClient = new ClovaSpeechClient();
+    private final ClovaSpeechClient clovaSpeechClient;
     private final NestRequestEntity nestRequestEntity = new NestRequestEntity();
 
     @Transactional
@@ -46,7 +48,7 @@ public class MoodDiaryService {
 
         return CreateDiaryResponse.of(
                 moodDiary.getId(),
-                diary
+                clovaSummarizationService.summarizeTexts(new String[]{diary}).result().text()
         );
     }
 
