@@ -9,7 +9,9 @@ import com.sparcs.team1.domain.mooddiary.dto.CreateAudioRequest;
 import com.sparcs.team1.domain.mooddiary.dto.CreateAudioResponse;
 import com.sparcs.team1.domain.mooddiary.dto.CreateDiaryRequest;
 import com.sparcs.team1.domain.mooddiary.dto.CreateDiaryResponse;
+import com.sparcs.team1.domain.mooddiary.dto.MoodDiaryCardListResponse;
 import com.sparcs.team1.domain.mooddiary.model.MoodDiary;
+import com.sparcs.team1.domain.mooddiary.model.MoodDiaryCard;
 import com.sparcs.team1.domain.mooddiary.repository.MoodDiaryRepository;
 import com.sparcs.team1.global.common.external.clova.chat.ChatResponse;
 import com.sparcs.team1.global.common.external.clova.chat.ClovaChatService;
@@ -19,6 +21,9 @@ import com.sparcs.team1.global.common.external.clova.storage.StorageService;
 import com.sparcs.team1.global.common.external.clova.summary.ClovaSummarizationService;
 import com.sparcs.team1.global.common.external.clova.tts.NaverTtsService;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -115,5 +120,18 @@ public class MoodDiaryService {
                     naverTtsService.generateSpeech(moodDiary.getAnswer(), "dara_ang", 0, 0, 0)
             );
         }
+    }
+
+    public MoodDiaryCardListResponse getMoodDiaryCards(Long memberId) {
+        List<MoodDiaryCard> moodDiaryCards = moodDiaryRepository
+                .findAllByMemberIdAndAnswerIsNotNullOrderByCreatedAtAsc(memberId)
+                .stream()
+                .map(moodDiary -> new MoodDiaryCard(
+                        moodDiary.getId(),
+                        moodDiary.getCreatedAt().format(DateTimeFormatter.ofPattern("yy.MM.dd"))
+                ))
+                .collect(Collectors.toList());
+
+        return MoodDiaryCardListResponse.of(moodDiaryCards);
     }
 }
