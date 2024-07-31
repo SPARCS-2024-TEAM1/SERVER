@@ -101,4 +101,11 @@ public class MoodDiaryController implements MoodDiaryApi {
     ) {
         return ResponseEntity.ok(moodDiaryService.getMoodDiary(moodDiaryId));
     }
+
+    @GetMapping("/diary/today/{memberId}")
+    public ResponseEntity<MoodDiaryResponse> getTodayMoodDiary(
+            @PathVariable final Long memberId
+    ) {
+        return ResponseEntity.ok(moodDiaryService.getTodayMoodDiary(memberId));
+    }
 }
