@@ -15,6 +15,6 @@ public interface ClovaSummarizationClient {
             @RequestParam("apiKey") final String apiKey,
             @RequestHeader("X-NCP-CLOVASTUDIO-API-KEY") final String clovaStudioApiKey,
             @RequestHeader("X-NCP-APIGW-API-KEY") final String apiGwApiKey,
-            @Valid @RequestBody final SummarizationRequest request
+            @Valid @RequestBody SummarizationRequest request
     );
 }
