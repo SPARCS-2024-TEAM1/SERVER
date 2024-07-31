@@ -65,9 +65,17 @@ public class MoodDiaryService {
     @Transactional
     public CreateAnswerResponse createAnswer(CreateAnswerRequest createAnswerRequest) {
         MoodDiary moodDiary = moodDiaryRepository.findMemberByIdOrThrow(createAnswerRequest.moodDiaryId());
-        String answer = getContentFromResponse(
-                clovaChatService.sendChatRequestToDG(moodDiary.getMood().name(), moodDiary.getDiary())
-        );
+        String answer;
+
+        if (moodDiary.getAssistant().getAssistant().equals("동글이")) {
+            answer = getContentFromResponse(
+                    clovaChatService.sendChatRequestToDG(moodDiary.getMood().getMood(), moodDiary.getDiary())
+            );
+        } else {
+            answer = getContentFromResponse(
+                    clovaChatService.sendChatRequestToPJ(moodDiary.getMood().getMood(), moodDiary.getDiary())
+            );
+        }
         moodDiary.updateAnswer(answer);
 
         return CreateAnswerResponse.of(
