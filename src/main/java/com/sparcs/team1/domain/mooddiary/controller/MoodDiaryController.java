@@ -88,7 +88,7 @@ public class MoodDiaryController implements MoodDiaryApi {
                 .body(responseBody);
     }
 
-    @GetMapping("/diary/{memberId}")
+    @GetMapping("/diary/list/{memberId}")
     public ResponseEntity<MoodDiaryCardListResponse> getDiaryDateList(
             @PathVariable final Long memberId
     ) {
