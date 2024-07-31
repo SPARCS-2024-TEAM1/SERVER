@@ -23,7 +23,7 @@ public interface MoodDiaryApi {
                             responseCode = "200",
                             description = "Success",
                             content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
                                     schema = @Schema(
                                             implementation = CreateDiaryResponse.class
                                     )
