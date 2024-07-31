@@ -10,6 +10,7 @@ import com.sparcs.team1.domain.mooddiary.dto.CreateAudioResponse;
 import com.sparcs.team1.domain.mooddiary.dto.CreateDiaryRequest;
 import com.sparcs.team1.domain.mooddiary.dto.CreateDiaryResponse;
 import com.sparcs.team1.domain.mooddiary.dto.MoodDiaryCardListResponse;
+import com.sparcs.team1.domain.mooddiary.dto.MoodDiaryResponse;
 import com.sparcs.team1.domain.mooddiary.model.MoodDiary;
 import com.sparcs.team1.domain.mooddiary.model.MoodDiaryCard;
 import com.sparcs.team1.domain.mooddiary.repository.MoodDiaryRepository;
@@ -133,5 +134,16 @@ public class MoodDiaryService {
                 .collect(Collectors.toList());
 
         return MoodDiaryCardListResponse.of(moodDiaryCards);
+    }
+
+    public MoodDiaryResponse getMoodDiary(Long moodDiaryId) {
+        MoodDiary moodDiary = moodDiaryRepository.findMoodDiaryByIdOrThrow(moodDiaryId);
+
+        return MoodDiaryResponse.of(
+                moodDiary.getId(),
+                moodDiary.getAssistant(),
+                moodDiary.getAnswer(),
+                moodDiary.getSummary()
+        );
     }
 }
