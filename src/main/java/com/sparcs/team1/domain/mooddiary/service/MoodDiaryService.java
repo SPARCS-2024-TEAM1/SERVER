@@ -36,7 +36,7 @@ public class MoodDiaryService {
                 .build();
         moodDiaryRepository.save(moodDiary);
 
-        String fileName = String.valueOf(createDiaryRequest.memberId()) + moodDiary.getId();
+        String fileName = String.valueOf(createDiaryRequest.memberId()) + moodDiary.getId() + ".wav";
 
         System.out.println(clovaSpeechClient.objectStorage(
                 storageService.uploadObjectStorage(fileName, createDiaryRequest.file()),
@@ -49,7 +49,7 @@ public class MoodDiaryService {
                         nestRequestEntity
                 )
         );
-        
+
         moodDiary.updateDiary(diary);
 
         return CreateDiaryResponse.of(
