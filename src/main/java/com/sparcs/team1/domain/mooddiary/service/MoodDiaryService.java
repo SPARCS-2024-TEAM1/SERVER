@@ -22,7 +22,7 @@ public class MoodDiaryService {
 
     private final StorageService storageService;
 
-    private final ClovaSpeechClient clovaSpeechClient = new ClovaSpeechClient();
+    private final ClovaSpeechClient clovaSpeechClient;
     private final NestRequestEntity nestRequestEntity = new NestRequestEntity();
 
     @Transactional
