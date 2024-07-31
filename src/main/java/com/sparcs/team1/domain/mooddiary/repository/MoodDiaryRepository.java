@@ -10,7 +10,7 @@ public interface MoodDiaryRepository extends JpaRepository<MoodDiary, Long> {
 
     Optional<MoodDiary> findMoodDiaryById(Long id);
 
-    default MoodDiary findMemberByIdOrThrow(Long id) {
+    default MoodDiary findMoodDiaryByIdOrThrow(Long id) {
         return findMoodDiaryById(id)
                 .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_MOOD_DIARY_ERROR));
     }
