@@ -18,6 +18,7 @@ import com.sparcs.team1.global.common.external.clova.speech.ClovaSpeechClient.Ne
 import com.sparcs.team1.global.common.external.clova.storage.StorageService;
 import com.sparcs.team1.global.common.external.clova.summary.ClovaSummarizationService;
 import com.sparcs.team1.global.common.external.clova.tts.NaverTtsService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,15 +104,15 @@ public class MoodDiaryService {
         return response.result().message().content();
     }
 
-    public CreateAudioResponse createAudio(CreateAudioRequest createAudioRequest) {
+    public CreateAudioResponse createAudio(CreateAudioRequest createAudioRequest) throws IOException {
         MoodDiary moodDiary = moodDiaryRepository.findMoodDiaryByIdOrThrow(createAudioRequest.moodDiaryId());
         if (moodDiary.getAssistant().name().equals("동글이")) {
             return CreateAudioResponse.of(
-                    naverTtsService.convertTextToSpeechDG(moodDiary.getAnswer())
+                    naverTtsService.generateSpeech(moodDiary.getAnswer(), "nkyuwon", 0, 0, 0)
             );
         } else {
             return CreateAudioResponse.of(
-                    naverTtsService.convertTextToSpeechPJ(moodDiary.getAnswer())
+                    naverTtsService.generateSpeech(moodDiary.getAnswer(), "dara_ang", 0, 0, 0)
             );
         }
     }

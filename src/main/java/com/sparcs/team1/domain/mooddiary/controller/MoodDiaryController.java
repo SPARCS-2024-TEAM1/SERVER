@@ -46,7 +46,14 @@ public class MoodDiaryController implements MoodDiaryApi {
     public ResponseEntity<StreamingResponseBody> createAudio(
             @RequestBody final CreateAudioRequest createAudioRequest
     ) {
-        File audioFile = moodDiaryService.createAudio(createAudioRequest).audioFile();
+        File audioFile;
+
+        try {
+            audioFile = moodDiaryService.createAudio(createAudioRequest).audioFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
 
         if (audioFile == null || !audioFile.exists()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -56,6 +63,7 @@ public class MoodDiaryController implements MoodDiaryApi {
             try (FileInputStream inputStream = new FileInputStream(audioFile)) {
                 byte[] buffer = new byte[4096];
                 int bytesRead;
+                
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                 }
