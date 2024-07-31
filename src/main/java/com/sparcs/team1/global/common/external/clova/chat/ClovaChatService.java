@@ -1,5 +1,6 @@
 package com.sparcs.team1.global.common.external.clova.chat;
 
+import com.sparcs.team1.domain.mooddiary.model.Mood;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class ClovaChatService {
     @Value("${naver.clova.chat.api.gwApiKey}")
     private String apiGwApiKey;
 
-    public ChatResponse sendChatRequestToDG(String mood, String diary) {
+    public ChatResponse sendChatRequestToDG(Mood mood, String diary) {
         ChatRequest request = new ChatRequest(
                 new ChatMessage[]{
                         new ChatMessage("system",
@@ -48,7 +49,7 @@ public class ClovaChatService {
         return clovaChatClient.sendChatRequest(apiKey, clovaStudioApiKey, apiGwApiKey, request);
     }
 
-    public ChatResponse sendChatRequestToPJ(String mood, String diary) {
+    public ChatResponse sendChatRequestToPJ(Mood mood, String diary) {
         ChatRequest request = new ChatRequest(
                 new ChatMessage[]{
                         new ChatMessage("system",

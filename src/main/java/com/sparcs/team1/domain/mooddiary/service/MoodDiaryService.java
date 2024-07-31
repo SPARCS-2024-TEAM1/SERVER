@@ -83,7 +83,7 @@ public class MoodDiaryService {
 
         if (moodDiary.getAssistant().name().equals("동글이")) {
             answer = getContentFromResponse(
-                    clovaChatService.sendChatRequestToDG(moodDiary.getMood().name(), moodDiary.getDiary())
+                    clovaChatService.sendChatRequestToDG(moodDiary.getMood(), moodDiary.getDiary())
             );
 
             if (member.getNickname() != null) {
@@ -91,7 +91,7 @@ public class MoodDiaryService {
             }
         } else {
             answer = getContentFromResponse(
-                    clovaChatService.sendChatRequestToPJ(moodDiary.getMood().name(), moodDiary.getDiary())
+                    clovaChatService.sendChatRequestToPJ(moodDiary.getMood(), moodDiary.getDiary())
             );
 
             if (member.getNickname() != null) {
@@ -131,7 +131,8 @@ public class MoodDiaryService {
                 .filter(moodDiary -> moodDiary.getCreatedAt().toLocalDate().isBefore(LocalDate.now())) // 오늘 날짜 제외
                 .map(moodDiary -> new MoodDiaryCard(
                         moodDiary.getId(),
-                        moodDiary.getCreatedAt().format(DateTimeFormatter.ofPattern("yy.MM.dd"))
+                        moodDiary.getCreatedAt().format(DateTimeFormatter.ofPattern("yy.MM.dd")),
+                        moodDiary.getMood()
                 ))
                 .collect(Collectors.toList());
 
