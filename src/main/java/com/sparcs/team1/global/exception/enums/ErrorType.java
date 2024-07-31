@@ -27,6 +27,11 @@ public enum ErrorType {
     NOT_FOUND_RESPONSE_BODY_ERROR(HttpStatus.NOT_FOUND, "40403", "Response Body가 존재하지 않습니다."),
 
     /**
+     * 409 CONFLICT
+     */
+    PHONE_NUMBER_DUP_ERROR(HttpStatus.CONFLICT, "40901", "이미 사용 중인 휴대전화 번호입니다."),
+
+    /**
      * 500 INTERNAL SERVER ERROR
      */
     INTERNAL_FEIGN_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "50001", "FEIGN 에러가 발생하였습니다."),
