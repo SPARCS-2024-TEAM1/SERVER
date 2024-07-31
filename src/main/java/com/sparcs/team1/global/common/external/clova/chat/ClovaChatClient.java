@@ -1,4 +1,5 @@
-package com.sparcs.team1.global.common.external.clova.summary;
+package com.sparcs.team1.global.common.external.clova.chat;
+
 
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -7,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "clovaSummarizationClient", url = "https://clovastudio.apigw.ntruss.com/testapp/v1/api-tools/summarization/v2")
-public interface ClovaSummarizationClient {
+@FeignClient(name = "clovaChatClient", url = "https://clovastudio.stream.ntruss.com/testapp/v1/chat-completions")
+public interface ClovaChatClient {
 
     @PostMapping("/{apiKey}")
-    SummarizationResponse summarizeTexts(
+    ChatResponse sendChatRequest(
             @RequestParam("apiKey") final String apiKey,
             @RequestHeader("X-NCP-CLOVASTUDIO-API-KEY") final String clovaStudioApiKey,
             @RequestHeader("X-NCP-APIGW-API-KEY") final String apiGwApiKey,
-            @Valid @RequestBody SummarizationRequest request
+            @Valid @RequestBody ChatRequest request
     );
 }
