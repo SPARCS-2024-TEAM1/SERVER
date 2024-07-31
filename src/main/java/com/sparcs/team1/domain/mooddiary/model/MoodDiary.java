@@ -72,4 +72,10 @@ public class MoodDiary extends BaseTimeEntity {
             this.diary = diary;
         }
     }
+
+    public void updateSummary(String summary) {
+        if (summary != null) {
+            this.summary = summary;
+        }
+    }
 }

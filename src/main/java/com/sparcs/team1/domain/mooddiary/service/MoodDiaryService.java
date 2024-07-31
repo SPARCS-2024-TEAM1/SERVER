@@ -45,10 +45,11 @@ public class MoodDiaryService {
                 )
         );
         moodDiary.updateDiary(diary);
+        moodDiary.updateSummary(clovaSummarizationService.summarizeTexts(new String[]{diary}).result().text());
 
         return CreateDiaryResponse.of(
                 moodDiary.getId(),
-                clovaSummarizationService.summarizeTexts(new String[]{diary}).result().text()
+                moodDiary.getSummary()
         );
     }
 
