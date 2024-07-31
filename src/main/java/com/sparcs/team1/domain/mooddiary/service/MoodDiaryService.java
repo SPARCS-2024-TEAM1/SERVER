@@ -44,6 +44,12 @@ public class MoodDiaryService {
                         nestRequestEntity
                 )
         );
+
+        System.out.println(clovaSpeechClient.objectStorage(
+                storageService.uploadObjectStorage(fileName, createDiaryRequest.file()),
+                nestRequestEntity
+        ));
+
         moodDiary.updateDiary(diary);
 
         return CreateDiaryResponse.of(
