@@ -1,5 +1,6 @@
 package com.sparcs.team1.global.common.external.clova.summary;
 
+import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,6 @@ public interface ClovaSummarizationClient {
             @RequestParam("apiKey") final String apiKey,
             @RequestHeader("X-NCP-CLOVASTUDIO-API-KEY") final String clovaStudioApiKey,
             @RequestHeader("X-NCP-APIGW-API-KEY") final String apiGwApiKey,
-            @RequestBody final SummarizationRequest request
+            @Valid @RequestBody final SummarizationRequest request
     );
 }
