@@ -2,10 +2,14 @@ package com.sparcs.team1.domain.mooddiary.service;
 
 import com.google.gson.JsonObject;
 import com.sparcs.team1.domain.member.repository.MemberRepository;
+import com.sparcs.team1.domain.mooddiary.dto.CreateAnswerRequest;
+import com.sparcs.team1.domain.mooddiary.dto.CreateAnswerResponse;
 import com.sparcs.team1.domain.mooddiary.dto.CreateDiaryRequest;
 import com.sparcs.team1.domain.mooddiary.dto.CreateDiaryResponse;
 import com.sparcs.team1.domain.mooddiary.model.MoodDiary;
 import com.sparcs.team1.domain.mooddiary.repository.MoodDiaryRepository;
+import com.sparcs.team1.global.common.external.clova.chat.ChatResponse;
+import com.sparcs.team1.global.common.external.clova.chat.ClovaChatService;
 import com.sparcs.team1.global.common.external.clova.speech.ClovaSpeechClient;
 import com.sparcs.team1.global.common.external.clova.speech.ClovaSpeechClient.NestRequestEntity;
 import com.sparcs.team1.global.common.external.clova.storage.StorageService;
@@ -23,6 +27,7 @@ public class MoodDiaryService {
 
     private final StorageService storageService;
     private final ClovaSummarizationService clovaSummarizationService;
+    private final ClovaChatService clovaChatService;
 
     private final ClovaSpeechClient clovaSpeechClient;
     private final NestRequestEntity nestRequestEntity = new NestRequestEntity();
@@ -55,5 +60,24 @@ public class MoodDiaryService {
 
     public String getTextFromResponse(JsonObject response) {
         return response.get("text").getAsString();
+    }
+
+    @Transactional
+    public CreateAnswerResponse createAnswer(CreateAnswerRequest createAnswerRequest) {
+        MoodDiary moodDiary = moodDiaryRepository.findMemberByIdOrThrow(createAnswerRequest.moodDiaryId());
+        String answer = getContentFromResponse(
+                clovaChatService.sendChatRequestToDG(moodDiary.getMood().name(), moodDiary.getDiary())
+        );
+        moodDiary.updateAnswer(answer);
+
+        return CreateAnswerResponse.of(
+                moodDiary.getMember().getId(),
+                moodDiary.getAnswer(),
+                moodDiary.getSummary()
+        );
+    }
+
+    public String getContentFromResponse(ChatResponse response) {
+        return response.result().message().content();
     }
 }
