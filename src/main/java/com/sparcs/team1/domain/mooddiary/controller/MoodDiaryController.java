@@ -6,6 +6,7 @@ import com.sparcs.team1.domain.mooddiary.dto.CreateAudioRequest;
 import com.sparcs.team1.domain.mooddiary.dto.CreateDiaryRequest;
 import com.sparcs.team1.domain.mooddiary.dto.CreateDiaryResponse;
 import com.sparcs.team1.domain.mooddiary.dto.MoodDiaryCardListResponse;
+import com.sparcs.team1.domain.mooddiary.dto.MoodDiaryResponse;
 import com.sparcs.team1.domain.mooddiary.service.MoodDiaryService;
 import java.io.File;
 import java.io.FileInputStream;
@@ -92,5 +93,12 @@ public class MoodDiaryController implements MoodDiaryApi {
             @PathVariable final Long memberId
     ) {
         return ResponseEntity.ok(moodDiaryService.getMoodDiaryCards(memberId));
+    }
+
+    @GetMapping("/diary/{moodDiaryId}")
+    public ResponseEntity<MoodDiaryResponse> getMoodDiary(
+            @PathVariable final Long moodDiaryId
+    ) {
+        return ResponseEntity.ok(moodDiaryService.getMoodDiary(moodDiaryId));
     }
 }
