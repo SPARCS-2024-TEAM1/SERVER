@@ -25,6 +25,7 @@ public enum ErrorType {
     NOT_FOUND_VERIFICATION_REQUEST_HISTORY(HttpStatus.NOT_FOUND, "40401", "인증 요청 이력이 존재하지 않습니다."),
     NOT_FOUND_MEMBER_ERROR(HttpStatus.NOT_FOUND, "40402", "존재하지 않는 회원입니다."),
     NOT_FOUND_RESPONSE_BODY_ERROR(HttpStatus.NOT_FOUND, "40403", "Response Body가 존재하지 않습니다."),
+    NOT_FOUND_MOOD_DIARY_ERROR(HttpStatus.NOT_FOUND, "40404", "존재하지 않는 감정 기록입니다."),
 
     /**
      * 409 CONFLICT
