@@ -38,18 +38,18 @@ public class MoodDiaryService {
 
         String fileName = String.valueOf(createDiaryRequest.memberId()) + moodDiary.getId();
 
+        System.out.println(clovaSpeechClient.objectStorage(
+                storageService.uploadObjectStorage(fileName, createDiaryRequest.file()),
+                nestRequestEntity
+        ));
+
         String diary = getTextFromResponse(
                 clovaSpeechClient.objectStorage(
                         storageService.uploadObjectStorage(fileName, createDiaryRequest.file()),
                         nestRequestEntity
                 )
         );
-
-        System.out.println(clovaSpeechClient.objectStorage(
-                storageService.uploadObjectStorage(fileName, createDiaryRequest.file()),
-                nestRequestEntity
-        ));
-
+        
         moodDiary.updateDiary(diary);
 
         return CreateDiaryResponse.of(
