@@ -19,7 +19,7 @@ public interface MoodDiaryRepository extends JpaRepository<MoodDiary, Long> {
     }
 
     // CreatedAt을 기준으로 오름차순 정렬된, answer가 존재하는 MoodDiary 리스트를 조회
-    List<MoodDiary> findAllMoodDiaryByMemberIdAndAnswerIsNotNullOrderByCreatedAtAsc(Long memberId);
+    List<MoodDiary> findAllMoodDiaryByMemberIdAndAnswerIsNotNullOrderByCreatedAtDesc(Long memberId);
 
     // 특정 멤버의 오늘 날짜에 해당하는 MoodDiary를 조회
     default MoodDiary findTodayMoodDiaryByMemberIdOrThrow(Long memberId) {

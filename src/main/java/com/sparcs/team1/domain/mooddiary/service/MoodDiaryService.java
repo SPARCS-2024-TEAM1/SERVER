@@ -126,7 +126,7 @@ public class MoodDiaryService {
 
     public MoodDiaryCardListResponse getMoodDiaryCards(Long memberId) {
         List<MoodDiaryCard> moodDiaryCards = moodDiaryRepository
-                .findAllMoodDiaryByMemberIdAndAnswerIsNotNullOrderByCreatedAtAsc(memberId)
+                .findAllMoodDiaryByMemberIdAndAnswerIsNotNullOrderByCreatedAtDesc(memberId)
                 .stream()
                 .filter(moodDiary -> moodDiary.getCreatedAt().toLocalDate().isBefore(LocalDate.now())) // 오늘 날짜 제외
                 .map(moodDiary -> new MoodDiaryCard(
