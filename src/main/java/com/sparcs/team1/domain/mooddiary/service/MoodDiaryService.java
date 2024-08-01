@@ -119,7 +119,7 @@ public class MoodDiaryService {
             );
         } else {
             return CreateAudioResponse.of(
-                    naverTtsService.generateSpeech(moodDiary.getAnswer(), "dara_ang", 0, 0, 0)
+                    naverTtsService.generateSpeech(moodDiary.getAnswer(), "dara_ang", -1, -1, -2)
             );
         }
     }

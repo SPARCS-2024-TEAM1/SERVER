@@ -26,7 +26,7 @@ public class NaverTtsService {
     @Value("${naver.tts.api.client.secret}")
     private String clientSecret;
 
-    public File generateSpeech(String text, String speaker, int volume, int speed, int pitch) throws IOException {
+    public File generateSpeech(String text, String speaker, int speed, int alpha, int pitch) throws IOException {
         try {
             String encodedText = URLEncoder.encode(text, "UTF-8");
             String apiURL = "https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts";
@@ -38,7 +38,7 @@ public class NaverTtsService {
 
             // POST 요청 파라미터 설정
             String postParams = String.format("speaker=%s&volume=%d&speed=%d&pitch=%d&format=mp3&text=%s",
-                    speaker, volume, speed, pitch, encodedText);
+                    speaker, speed, alpha, pitch, encodedText);
             con.setDoOutput(true);
             try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
                 wr.writeBytes(postParams);
