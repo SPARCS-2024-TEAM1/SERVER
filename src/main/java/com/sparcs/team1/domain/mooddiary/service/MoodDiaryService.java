@@ -151,7 +151,14 @@ public class MoodDiaryService {
     }
 
     public MoodDiaryResponse getTodayMoodDiary(Long memberId) {
-        MoodDiary moodDiary = moodDiaryRepository.findTodayMoodDiaryByMemberIdOrThrow(memberId);
+        List<MoodDiary> moodDiaries = moodDiaryRepository.findAllMoodDiaryByMemberIdAndAnswerIsNotNullOrderByCreatedAtDesc(
+                memberId);
+
+        if (moodDiaries.isEmpty() || !moodDiaries.get(0).getCreatedAt().toLocalDate().isEqual(LocalDate.now())) {
+            return null;
+        }
+
+        MoodDiary moodDiary = moodDiaries.get(0);
 
         return MoodDiaryResponse.of(
                 moodDiary.getId(),
